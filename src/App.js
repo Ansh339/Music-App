@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
-import Navbar from "./navbar/navbar.jsx";
-import Body from "./body/body.jsx";
-import Footer from "./footer/footer.jsx";
+import Navbar from "./components/navbar/navbar.jsx";
+import Body from "./components/body/body.jsx";
+import Footer from "./components/footer/footer.jsx";
 
 function App() {
   return (

@@ -1,26 +1,10 @@
 import React from "react";
 import "./App.css";
-import Navbar from "./components/navbar/navbar.jsx";
-import Body from "./components/body/body.jsx";
-import Footer from "./components/footer/footer.jsx";
+import Body from "./Components/Body"
 
 function App() {
   return (
-    <div>
-      <Navbar/>
       <Body/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <Footer/>
-    </div>
   );
 }
 

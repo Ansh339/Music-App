@@ -1,0 +1,12 @@
+body{
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.frame{
+    border: 5px solid green;
+    width: 150px;
+    height: 100px;
+    margin-left: 83px;
+    text-align: center;
+}

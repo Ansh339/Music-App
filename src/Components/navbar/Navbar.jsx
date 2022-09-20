@@ -12,7 +12,7 @@ class Navbar extends Component {
       <div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
           <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src={image} alt="Music" height='50%' width='50%' /></a>
+            <a class="navbar-brand" href="#"><img src={image} alt="Music" height='25%' width='25%' /></a>
             <div class="collapse navbar-collapse" id="navbarColor01">
               <ul class="navbar-nav me-auto">
                 <li class="nav-item">

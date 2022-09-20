@@ -27,7 +27,7 @@ class Navbar extends Component {
               <span class="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarColor01">
-              <ul className="navbar-nav ">
+              <ul className="navbar-nav me-auto">
                 <li className="nav-item ">
                   <a
                     className="nav-link text-dark  fs-4 "
@@ -40,6 +40,7 @@ class Navbar extends Component {
                 </li>
                 <li className="nav-item">
                   <a
+                    id="lib"
                     className="nav-link text-dark fs-4"
                     onClick={(event) => {
                       this.props.setNav(2);
@@ -61,14 +62,23 @@ class Navbar extends Component {
               </ul>
               <form className="d-flex justify-content-end">
                 <input
-                  className="form-control me-sm-2  "
+                  className="form-control    "
                   type="text"
-                  placeholder="Search"
+                  placeholder="type to search..."
                   value={this.props.trackName}
                   onChange={(event) => {
                     this.props.setTrackName(event.target.value);
                   }}
                 />
+                <button
+                  class="btn btn-secondary ms-3 my-2 my-sm-0"
+                  type="submit"
+                  onClick={(event) => {
+                    this.props.setNav(2);
+                  }}
+                >
+                  Search
+                </button>
               </form>
             </div>
           </div>

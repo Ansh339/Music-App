@@ -1,5 +1,5 @@
 import "./navbar.css";
-import image from "./assets/logo.png";
+import image from "./assets/music_logo-removebg-preview.png";
 import React from "react";
 import { Component } from "react";
 

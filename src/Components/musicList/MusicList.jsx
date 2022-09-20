@@ -1,4 +1,5 @@
 import React from "react";
+import "./musicList.css"
 
 const musicList = ({ trackID }) => {
     //Create an embed link to use in iframes

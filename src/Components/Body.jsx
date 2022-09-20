@@ -4,16 +4,22 @@ import axios from "axios";
 import Navbar from "./navbar/Navbar.jsx";
 import MusicLib from "./MusicLib/MusicLib.jsx";
 import Footer from "./footer/Footer.jsx";
+import Home from "./Home/Home.jsx";
+import About from "./About/About.jsx";
 
-class body extends Component{
-    constructor(props){
+class body extends Component {
+    constructor(props) {
         super(props)
         this.state = {
             response: [],
-            redirect: 'https://accounts.spotify.com/authorize?client_id=cc332d7702a047d58bbab0cbe3db8f98&response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F',
+            responseArtists: [],
+            responseLikes: [],
+            responseUser: '',
+            redirect: 'https://accounts.spotify.com/authorize?client_id=cc332d7702a047d58bbab0cbe3db8f98&response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=user-follow-read%20user-library-read',
             trackNameRaw: '',
-            trackNameRawDefault : 'test',
-            headerConfig: {}
+            trackNameRawDefault: 'test',
+            headerConfig: {},
+            navComponent: 1
         }
     }
 
@@ -55,37 +61,73 @@ class body extends Component{
             }
         }
 
-        this.setState({headerConfig : config})
+        this.setState({ headerConfig: config })
 
         //Get request with axios
-        axios.get(url, this.state.headerConfig)
+        /*axios.get(url, this.state.headerConfig)
             .then(response => {
                 let responseItems = response.data.tracks.items
                 this.setState({ response: responseItems })
             })
+            .catch(error => {
+                console.log(error.response.data.error.message)
+            })*/
+
+        //Axios GET request for the user
+        axios.all([
+            axios.get('https://api.spotify.com/v1/me/following?type=artist', config),
+            axios.get('https://api.spotify.com/v1/me/tracks?limit=10', config),
+            axios.get('https://api.spotify.com/v1/me', config)])
+            .then(axios.spread((responseArtists, responseLikes, responseUser) => {
+                this.setState({responseArtists: responseArtists.data.artists.items })
+                this.setState({responseLikes : responseLikes.data.items})
+                this.setState({responseUser: responseUser.data.display_name})
+            }))
+
+            .catch(error => {
+                console.log(error.response.data.error.message)
+            })
     }
 
     //Repeat API calls in compnentDidUpdate to update the compnents during a search
-    componentDidUpdate(){
-        let trackName = encodeURI(this.state.trackNameRaw)
-        let url = `https://api.spotify.com/v1/search?q=${trackName}&type=track`
+    componentDidUpdate() {
+        if (this.state.navComponent === 2) {
+            let trackName = encodeURI(this.state.trackNameRaw)
+            let url = `https://api.spotify.com/v1/search?q=${trackName}&type=track`
 
-        axios.get(url, this.state.headerConfig)
-        .then(response => {
-            let responseItems = response.data.tracks.items
-            this.setState({ response: responseItems })
-        })
+            axios.get(url, this.state.headerConfig)
+                .then(response => {
+                    let responseItems = response.data.tracks.items
+                    this.setState({ response: responseItems })
+                })
+                .catch(error => {
+                    console.log(error.response.data.error.message)
+                })
+        }
+
+
     }
 
     render() {
-        let setTrackNameRaw = (track) =>{
-            this.setState({trackNameRaw : track})
-            console.log(this.state.trackNameRaw)
+        let setTrackNameRaw = (track) => {
+            this.setState({ trackNameRaw: track })
         }
+
+        let setNavComponent = (id) => {
+            this.setState({ navComponent: id })
+        }
+
         return (
             <div>
-                <Navbar trackName = {this.state.trackNameRaw} setTrackName = {setTrackNameRaw}/>
-                <MusicLib responseItems = {this.state.response}/>
+                {console.log(this.state.responseLikes)}
+                <Navbar trackName={this.state.trackNameRaw} setTrackName={setTrackNameRaw} setNav={setNavComponent} />
+                {
+                    {
+                        1: <Home Artists={this.state.responseArtists} Likes = {this.state.responseLikes} UserName = {this.state.responseUser}/>,
+                        2: <MusicLib responseItems={this.state.response} />,
+                        3: <About />
+                    }[this.state.navComponent]
+                }
                 <br />
                 <Footer />
             </div>

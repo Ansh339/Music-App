@@ -11,7 +11,7 @@ class MusicLib extends Component {
   render() {
     return (
       <div>
-        <h1 className=" text-center mt-2 text-dark">Your searched music</h1>
+        <h1 className=" text-center mt-2 text-dark">Your Searched Music</h1>
         <br />
         <ul className="list-unstyled ">
           {this.props.responseItems.map((item) => (

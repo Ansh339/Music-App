@@ -16,9 +16,11 @@ class MusicLib extends Component {
                 <Welcome userName = {this.props.UserName}/>
                 <Artists Artists = {this.props.Artists}/>
                 <h3><b>Your Playlists</b></h3>
-                {
-                    this.props.Playlists.map(Playlist => <Playlists key={Playlist.id} playlistID={Playlist.id}/>)
-                }
+                <ul className="list-unstyled">
+                    {
+                        this.props.Playlists.map(Playlist => <Playlists key={Playlist.id} playlistID={Playlist.id}/>)
+                    }
+                </ul>
                 <Likes Likes = {this.props.Likes}/>
             </div>
         );

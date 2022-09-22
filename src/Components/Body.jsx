@@ -15,7 +15,8 @@ class body extends Component {
             responseArtists: [],
             responseLikes: [],
             responseUser: '',
-            redirect: 'https://accounts.spotify.com/authorize?client_id=cc332d7702a047d58bbab0cbe3db8f98&response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=user-follow-read%20user-library-read',
+            responsePlaylists: [],
+            redirect: 'https://accounts.spotify.com/authorize?client_id=cc332d7702a047d58bbab0cbe3db8f98&response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=user-follow-read%20user-library-read%20playlist-read-private',
             trackNameRaw: '',
             trackNameRawDefault: 'test',
             headerConfig: {},
@@ -63,25 +64,17 @@ class body extends Component {
 
         this.setState({ headerConfig: config })
 
-        //Get request with axios
-        /*axios.get(url, this.state.headerConfig)
-            .then(response => {
-                let responseItems = response.data.tracks.items
-                this.setState({ response: responseItems })
-            })
-            .catch(error => {
-                console.log(error.response.data.error.message)
-            })*/
-
         //Axios GET request for the user
         axios.all([
             axios.get('https://api.spotify.com/v1/me/following?type=artist', config),
             axios.get('https://api.spotify.com/v1/me/tracks?limit=10', config),
-            axios.get('https://api.spotify.com/v1/me', config)])
-            .then(axios.spread((responseArtists, responseLikes, responseUser) => {
+            axios.get('https://api.spotify.com/v1/me', config),
+            axios.get('https://api.spotify.com/v1/me/playlists', config)])
+            .then(axios.spread((responseArtists, responseLikes, responseUser, responsePlaylists) => {
                 this.setState({responseArtists: responseArtists.data.artists.items })
                 this.setState({responseLikes : responseLikes.data.items})
                 this.setState({responseUser: responseUser.data.display_name})
+                this.setState({responsePlaylists: responsePlaylists.data.items})
             }))
 
             .catch(error => {
@@ -123,7 +116,7 @@ class body extends Component {
                 <Navbar trackName={this.state.trackNameRaw} setTrackName={setTrackNameRaw} setNav={setNavComponent} />
                 {
                     {
-                        1: <Home Artists={this.state.responseArtists} Likes = {this.state.responseLikes} UserName = {this.state.responseUser}/>,
+                        1: <Home Artists={this.state.responseArtists} Likes = {this.state.responseLikes} UserName = {this.state.responseUser} Playlists = {this.state.responsePlaylists}/>,
                         2: <MusicLib responseItems={this.state.response} />,
                         3: <About />
                     }[this.state.navComponent]

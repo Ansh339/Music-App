@@ -74,6 +74,7 @@ class Navbar extends Component {
                   class="btn btn-secondary ms-3 my-2 my-sm-0"
                   type="submit"
                   onClick={(event) => {
+                    event.preventDefault();
                     this.props.setNav(2);
                   }}
                 >

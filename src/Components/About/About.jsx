@@ -8,7 +8,7 @@ function About() {
         This Project is our Attempt as a team to create a Music App using the
         API provided by Spotify to fetch the data of the various Music Tracks
       </p>
-      <h1 className="text-dark text-center">TEAM-</h1>
+      <h1 className="text-dark text-center">TEAM MUSICERS</h1>
       <h4 className=" text-uppercase text-dark text-center">Aditya</h4>
       <h4 className=" text-uppercase text-dark text-center">Ansh</h4>
       <h4 className=" text-uppercase text-dark text-center">Chaya</h4>
